@@ -79,3 +79,18 @@ def deletar_anuncio(anuncio_id: int):
     if cursor.rowcount == 0:
         raise HTTPException(status_code=404, detail="Anúncio não encontrado")
     return {"mensagem": "Anúncio removido com sucesso"}
+
+@app.put("/anuncios/{anuncio_id}")
+def atualizar_anuncio(anuncio_id: int, anuncio: AnuncioCreate):
+    conn = get_db()
+    cursor = conn.execute(
+        """UPDATE anuncios
+           SET titulo = ?, descricao = ?, categoria = ?, preco = ?, doacao = ?, imagem_url = ?
+           WHERE id = ?""",
+        (anuncio.titulo, anuncio.descricao, anuncio.categoria, anuncio.preco, anuncio.doacao, anuncio.imagem_url, anuncio_id)
+    )
+    conn.commit()
+    conn.close()
+    if cursor.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Anúncio não encontrado")
+    return {"id": anuncio_id, **anuncio.dict()}
