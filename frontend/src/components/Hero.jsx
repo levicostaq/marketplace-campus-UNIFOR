@@ -8,9 +8,9 @@ function Hero() {
         mais) com quem está chegando na universidade e precisa deles.
       </p>
       <div className="hero-ctas">
-        <a href="#vitrine" className="btn btn-primario">
-          Anunciar um item
-        </a>
+        <a href="#anunciar" className="btn btn-primario">
+  Anunciar um item
+</a>
         <a href="#vitrine" className="btn btn-secundario">
           Buscar itens
         </a>

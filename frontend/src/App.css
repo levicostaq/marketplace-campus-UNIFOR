@@ -237,3 +237,93 @@
   text-align: center;
   font-size: 13px;
 }
+/* Formulário de anúncio */
+.anunciar {
+  padding: 64px 32px;
+  border-top: 1px solid var(--border);
+}
+
+.form-anuncio {
+  max-width: 480px;
+  margin: 24px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.form-anuncio label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-h);
+}
+
+.form-anuncio input,
+.form-anuncio select,
+.form-anuncio textarea {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  font: inherit;
+}
+
+.checkbox-label {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+}
+
+.checkbox-label input {
+  width: auto;
+}
+
+.form-anuncio button {
+  border: none;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.form-anuncio button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-mensagem {
+  font-size: 14px;
+  color: var(--accent);
+}
+
+.vitrine-vazia {
+  text-align: center;
+  padding: 32px 0;
+}
+@media (max-width: 480px) {
+  .header {
+    padding: 16px 20px;
+  }
+
+  .logo {
+    font-size: 17px;
+  }
+
+  .nav {
+    gap: 16px;
+  }
+
+  .nav a {
+    font-size: 14px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+}

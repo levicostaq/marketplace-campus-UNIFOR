@@ -1,16 +1,31 @@
-import { useState } from "react"
-import { mockAnuncios } from "../data/mockAnuncios"
+import { useState, useEffect } from "react"
 import AnuncioCard from "./AnuncioCard"
 
 const categorias = ["Todos", "Livros", "Eletrônicos", "Engenharia", "Computação", "Outros"]
 
 function Vitrine() {
+  const [anuncios, setAnuncios] = useState([])
   const [categoriaAtiva, setCategoriaAtiva] = useState("Todos")
+  const [carregando, setCarregando] = useState(true)
 
-  const anunciosFiltrados =
-    categoriaAtiva === "Todos"
-      ? mockAnuncios
-      : mockAnuncios.filter((anuncio) => anuncio.categoria === categoriaAtiva)
+  useEffect(() => {
+    const url =
+      categoriaAtiva === "Todos"
+        ? "http://127.0.0.1:8000/anuncios"
+        : `http://127.0.0.1:8000/anuncios?categoria=${categoriaAtiva}`
+
+    setCarregando(true)
+    fetch(url)
+      .then((resposta) => resposta.json())
+      .then((dados) => {
+        setAnuncios(dados)
+        setCarregando(false)
+      })
+      .catch((erro) => {
+        console.error("Erro ao buscar anúncios:", erro)
+        setCarregando(false)
+      })
+  }, [categoriaAtiva])
 
   return (
     <section id="vitrine" className="vitrine">
@@ -22,9 +37,7 @@ function Vitrine() {
             key={categoria}
             type="button"
             className={
-              categoria === categoriaAtiva
-                ? "filtro-btn filtro-ativo"
-                : "filtro-btn"
+              categoria === categoriaAtiva ? "filtro-btn filtro-ativo" : "filtro-btn"
             }
             onClick={() => setCategoriaAtiva(categoria)}
           >
@@ -33,8 +46,14 @@ function Vitrine() {
         ))}
       </div>
 
+      {carregando && <p>Carregando anúncios...</p>}
+
+      {!carregando && anuncios.length === 0 && (
+        <p className="vitrine-vazia">Nenhum item nessa categoria ainda.</p>
+      )}
+
       <div className="grid-anuncios">
-        {anunciosFiltrados.map((anuncio) => (
+        {anuncios.map((anuncio) => (
           <AnuncioCard key={anuncio.id} anuncio={anuncio} />
         ))}
       </div>
