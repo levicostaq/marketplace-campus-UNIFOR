@@ -1,5 +1,5 @@
 function AnuncioCard({ anuncio }) {
-  const imagemPadrao = "https://placehold.co/300x200/2e7d32/white?text=Sem+imagem"
+  const imagemPadrao = "https://placehold.co/300x200/0e7490/white?text=Sem+imagem"
   const imagemSrc = anuncio.imagem_url || imagemPadrao
 
   function handleImagemErro(evento) {

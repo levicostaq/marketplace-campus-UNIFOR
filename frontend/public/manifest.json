@@ -4,8 +4,8 @@
   "description": "Anuncie, doe ou encontre itens de outros estudantes do campus.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#16171d",
-  "theme_color": "#2e7d32",
+  "background_color": "#f7f5f0",
+  "theme_color": "#0e7490",
   "icons": [
     {
       "src": "/icon-192.png",
