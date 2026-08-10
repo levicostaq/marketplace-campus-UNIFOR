@@ -1,10 +1,18 @@
 function AnuncioCard({ anuncio }) {
+  const imagemPadrao = "https://placehold.co/300x200/2e7d32/white?text=Sem+imagem"
+  const imagemSrc = anuncio.imagem_url || imagemPadrao
+
+  function handleImagemErro(evento) {
+    evento.target.src = imagemPadrao
+  }
+
   return (
     <div className="anuncio-card">
       <img
-        src={anuncio.imagem_url}
+        src={imagemSrc}
         alt={anuncio.titulo}
         className="anuncio-imagem"
+        onError={handleImagemErro}
       />
       <div className="anuncio-info">
         <span className="anuncio-categoria">{anuncio.categoria}</span>
