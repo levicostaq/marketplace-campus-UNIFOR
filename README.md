@@ -109,9 +109,11 @@ Esse foi o prompt inicial que usei pra "configurar" como eu queria trabalhar com
 
 Usei esse prompt quando percebi que a IA tinha começado a criar arquivos do projeto sozinha, sem eu digitar nada — foi um momento de correção de rumo importante (detalho mais na Reflexão Crítica abaixo).
 
-> [enviando print de erro] "isso mesmo ficou muito apertado" / "nao deu certo"
+> [enviando print do terminal com `sqlite3.OperationalError: table anuncios has no column named dispositivo_id`] "ai"
 
-Ao longo do projeto, sempre que algo dava errado (erro 422 no teste do Swagger, CSS que não aplicava, layout quebrado no mobile), meu processo era testar, tirar print da tela/console, e mandar pra IA analisar — em vez de tentar descrever o erro de memória, o que evitava diagnósticos errados.
+Esse foi um erro real de banco de dados, no Dia 5: eu tinha adicionado a coluna `dispositivo_id` no código do `CREATE TABLE`, mas o banco (`marketplace.db`) já existia desde o Dia 1 sem essa coluna — e `CREATE TABLE IF NOT EXISTS` não altera uma tabela já existente. A partir só do print do terminal, a IA identificou a causa raiz e me indicou o comando certo (`ALTER TABLE ... ADD COLUMN`) pra corrigir sem perder os dados que já estavam salvos.
+
+Ao longo do projeto, sempre que algo dava errado (erro 422 no teste do Swagger, CSS que não aplicava, layout quebrado no mobile, esse erro de banco), meu processo era sempre o mesmo: testar, tirar print da tela/console/terminal, e mandar pra IA analisar — em vez de tentar descrever o erro de memória, o que evitava diagnósticos errados.
 
 ### 3. Compartilhamento de Histórico
 
