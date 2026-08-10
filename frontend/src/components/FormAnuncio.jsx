@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { obterDispositivoId } from "../utils/dispositivo"
 
 const categorias = ["Livros", "Eletrônicos", "Engenharia", "Computação", "Outros"]
 
@@ -35,6 +36,7 @@ function FormAnuncio({ onAnuncioCriado }) {
       body: JSON.stringify({
         ...form,
         preco: form.doacao ? null : Number(form.preco),
+        dispositivo_id: obterDispositivoId(),
       }),
     })
       .then((resposta) => {

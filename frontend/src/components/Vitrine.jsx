@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react"
 import AnuncioCard from "./AnuncioCard"
+import { obterDispositivoId } from "../utils/dispositivo"
 
 const categorias = ["Todos", "Livros", "Eletrônicos", "Engenharia", "Computação", "Outros"]
 
 function Vitrine() {
   const [anuncios, setAnuncios] = useState([])
   const [categoriaAtiva, setCategoriaAtiva] = useState("Todos")
+  const [somenteMeus, setSomenteMeus] = useState(false)
   const [carregando, setCarregando] = useState(true)
 
   useEffect(() => {
-    const url =
-      categoriaAtiva === "Todos"
-        ? "http://127.0.0.1:8000/anuncios"
-        : `http://127.0.0.1:8000/anuncios?categoria=${categoriaAtiva}`
+    const parametros = new URLSearchParams()
+    if (categoriaAtiva !== "Todos") {
+      parametros.set("categoria", categoriaAtiva)
+    }
+    if (somenteMeus) {
+      parametros.set("dispositivo_id", obterDispositivoId())
+    }
+
+    const query = parametros.toString()
+    const url = `http://127.0.0.1:8000/anuncios${query ? "?" + query : ""}`
 
     setCarregando(true)
     fetch(url)
@@ -25,7 +33,7 @@ function Vitrine() {
         console.error("Erro ao buscar anúncios:", erro)
         setCarregando(false)
       })
-  }, [categoriaAtiva])
+  }, [categoriaAtiva, somenteMeus])
 
   return (
     <section id="vitrine" className="vitrine">
@@ -44,12 +52,22 @@ function Vitrine() {
             {categoria}
           </button>
         ))}
+
+        <button
+          type="button"
+          className={somenteMeus ? "filtro-btn filtro-ativo" : "filtro-btn"}
+          onClick={() => setSomenteMeus((valor) => !valor)}
+        >
+          {somenteMeus ? "✓ Meus anúncios" : "Meus anúncios"}
+        </button>
       </div>
 
       {carregando && <p>Carregando anúncios...</p>}
 
       {!carregando && anuncios.length === 0 && (
-        <p className="vitrine-vazia">Nenhum item nessa categoria ainda.</p>
+        <p className="vitrine-vazia">
+          {somenteMeus ? "Você ainda não publicou nenhum anúncio." : "Nenhum item nessa categoria ainda."}
+        </p>
       )}
 
       <div className="grid-anuncios">

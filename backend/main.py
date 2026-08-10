@@ -12,13 +12,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Conexão com o banco ---
+
 def get_db():
     conn = sqlite3.connect("marketplace.db")
     conn.row_factory = sqlite3.Row  # permite acessar colunas pelo nome
     return conn
 
-# Cria a tabela se ela ainda não existir (roda uma vez, ao iniciar o servidor)
+
 @app.on_event("startup")
 def startup():
     conn = get_db()
@@ -30,13 +30,21 @@ def startup():
             categoria TEXT NOT NULL,
             preco REAL,
             doacao BOOLEAN NOT NULL DEFAULT 0,
-            imagem_url TEXT
+            imagem_url TEXT,
+            dispositivo_id TEXT
         )
     """)
     conn.commit()
+
+    try:
+        conn.execute("ALTER TABLE anuncios ADD COLUMN dispositivo_id TEXT")
+        conn.commit()
+    except sqlite3.OperationalError:
+        pass  # a coluna já existe, não precisa fazer nada
+
     conn.close()
 
-# --- Formato dos dados que a API espera receber ---
+
 class AnuncioCreate(BaseModel):
     titulo: str
     descricao: Optional[str] = None
@@ -44,21 +52,21 @@ class AnuncioCreate(BaseModel):
     preco: Optional[float] = None
     doacao: bool = False
     imagem_url: Optional[str] = None
-
+    dispositivo_id: Optional[str] = None
 
 @app.get("/")
 def home():
     return {"mensagem": "API do Marketplace de Economia Circular no ar!"}
 
 
-# --- Endpoints de anúncios (CRUD) ---
+
 
 @app.post("/anuncios")
 def criar_anuncio(anuncio: AnuncioCreate):
     conn = get_db()
     cursor = conn.execute(
-        "INSERT INTO anuncios (titulo, descricao, categoria, preco, doacao, imagem_url) VALUES (?, ?, ?, ?, ?, ?)",
-        (anuncio.titulo, anuncio.descricao, anuncio.categoria, anuncio.preco, anuncio.doacao, anuncio.imagem_url)
+        "INSERT INTO anuncios (titulo, descricao, categoria, preco, doacao, imagem_url, dispositivo_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        (anuncio.titulo, anuncio.descricao, anuncio.categoria, anuncio.preco, anuncio.doacao, anuncio.imagem_url, anuncio.dispositivo_id)
     )
     conn.commit()
     novo_id = cursor.lastrowid
@@ -67,12 +75,17 @@ def criar_anuncio(anuncio: AnuncioCreate):
 
 
 @app.get("/anuncios")
-def listar_anuncios(categoria: Optional[str] = None):
+def listar_anuncios(categoria: Optional[str] = None, dispositivo_id: Optional[str] = None):
     conn = get_db()
+    query = "SELECT * FROM anuncios WHERE 1=1"
+    parametros = []
     if categoria:
-        rows = conn.execute("SELECT * FROM anuncios WHERE categoria = ?", (categoria,)).fetchall()
-    else:
-        rows = conn.execute("SELECT * FROM anuncios").fetchall()
+        query += " AND categoria = ?"
+        parametros.append(categoria)
+    if dispositivo_id:
+        query += " AND dispositivo_id = ?"
+        parametros.append(dispositivo_id)
+    rows = conn.execute(query, parametros).fetchall()
     conn.close()
     return [dict(row) for row in rows]
 
