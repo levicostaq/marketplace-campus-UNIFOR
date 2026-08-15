@@ -1,6 +1,10 @@
 # EcoCampus — Marketplace de Economia Circular do Campus
 
-🔗 **[Ver projeto no ar](https://marketplace-campus-unifor.vercel.app)** · [API](https://ecocampus-api-iv2d.onrender.com/docs)
+🔗 **[Ver projeto no ar](https://marketplace-campus-unifor.vercel.app)** · [Documentação da API](https://ecocampus-api-iv2d.onrender.com/docs)
+
+![Vitrine do EcoCampus](assets/vitrine.png)
+
+> ℹ️ O backend está hospedado no plano gratuito do Render, que hiberna após 15 minutos de inatividade. A primeira requisição pode levar cerca de 50 segundos para responder — depois disso, a navegação é normal.
 
 Projeto desenvolvido para o Desafio Técnico do Processo Seletivo do Laboratório Vortex (UNIFOR) — 2026.
 
