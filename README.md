@@ -1,5 +1,7 @@
 # EcoCampus — Marketplace de Economia Circular do Campus
 
+🔗 **[Ver projeto no ar](https://marketplace-campus-unifor.vercel.app)** · [API](https://ecocampus-api-iv2d.onrender.com/docs)
+
 Projeto desenvolvido para o Desafio Técnico do Processo Seletivo do Laboratório Vortex (UNIFOR) — 2026.
 
 ## Sobre o projeto
