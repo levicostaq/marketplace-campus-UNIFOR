@@ -2,7 +2,7 @@
 
 🔗 **[Ver projeto no ar](https://marketplace-campus-unifor.vercel.app)** · [Documentação da API](https://ecocampus-api-iv2d.onrender.com/docs)
 
-![Vitrine do EcoCampus](assets/vitrine.png)
+![Vitrine do EcoCampus](frontend/src/assets/vitrine.png)
 
 > ℹ️ O backend está hospedado no plano gratuito do Render, que hiberna após 15 minutos de inatividade. A primeira requisição pode levar cerca de 50 segundos para responder — depois disso, a navegação é normal.
 
