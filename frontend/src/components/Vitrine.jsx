@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import AnuncioCard from "./AnuncioCard"
 import { obterDispositivoId } from "../utils/dispositivo"
+import { API_URL } from "../api"
 
 const categorias = ["Todos", "Livros", "Eletrônicos", "Engenharia", "Computação", "Outros"]
 
@@ -20,7 +21,7 @@ function Vitrine() {
     }
 
     const query = parametros.toString()
-    const url = `http://127.0.0.1:8000/anuncios${query ? "?" + query : ""}`
+    const url = `${API_URL}/anuncios${query ? "?" + query : ""}`
 
     setCarregando(true)
     fetch(url)
