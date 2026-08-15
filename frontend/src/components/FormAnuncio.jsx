@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { obterDispositivoId } from "../utils/dispositivo"
+import { API_URL } from "../api";
 
 const categorias = ["Livros", "Eletrônicos", "Engenharia", "Computação", "Outros"]
 
